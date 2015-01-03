@@ -1,7 +1,7 @@
 {application, pacn,
  [
-  {description, ""},
-  {vsn, "1"},
+  {description, "Packet Notifier"},
+  {vsn, "0.01"},
   {registered, []},
   {applications, [
                   kernel,
