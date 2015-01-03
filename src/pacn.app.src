@@ -1,0 +1,12 @@
+{application, pacn,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { pacn_app, []}},
+  {env, []}
+ ]}.
