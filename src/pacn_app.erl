@@ -10,6 +10,7 @@
 %% ===================================================================
 
 start(_StartType, _StartArgs) ->
+    io:format(standard_error, "Starting pacn...\n", []),
     pacn_sup:start_link().
 
 stop(_State) ->
