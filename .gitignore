@@ -2,5 +2,6 @@
 .*.swo
 /tmp
 /ebin
+/deps
 /.rebar
 /erl_crash.dump
