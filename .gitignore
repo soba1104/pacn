@@ -3,3 +3,4 @@
 /tmp
 /ebin
 /.rebar
+/erl_crash.dump
