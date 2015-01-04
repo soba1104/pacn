@@ -3,7 +3,7 @@
 -behaviour(gen_server).
 
 %% API
--export([start_link/0]).
+-export([start_link/2]).
 
 %% gen_server callbacks
 -export([
@@ -19,10 +19,11 @@
 %% API functions
 %% ===================================================================
 
-start_link() ->
+start_link(Interface, Filter) ->
     io:format(standard_error, "pacn_sniffer:start_link\n", []),
     ServerName = {local, pacn_sniffer},
-    gen_server:start_link(ServerName, ?MODULE, [], []).
+    Args = [Interface, Filter],
+    gen_server:start_link(ServerName, ?MODULE, Args, []).
 
 %% ===================================================================
 %% gen_server callbacks
@@ -30,7 +31,8 @@ start_link() ->
 
 init(Args) ->
     io:format(standard_error, "pacn_sniffer:init(~p)\n", [Args]),
-    epcap:start([]),
+    [Interface, Filter] = Args,
+    epcap:start([{interface, Interface}, {filter, Filter}]),
     {ok, {}}.
 
 handle_call(Request, From, State) ->
