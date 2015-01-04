@@ -8,14 +8,12 @@
 %% Supervisor callbacks
 -export([init/1]).
 
-%% Helper macro for declaring children of supervisor
--define(CHILD(I, Type), {I, {I, start_link, []}, permanent, 5000, Type, [I]}).
-
 %% ===================================================================
 %% API functions
 %% ===================================================================
 
 start_link() ->
+    io:format(standard_error, "Starting pacn_sniffer server...\n", []),
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %% ===================================================================
@@ -23,5 +21,8 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    {ok, { {one_for_one, 5, 10}, []} }.
+    io:format(standard_error, "Initializing pacn_sniffer server...\n", []),
+    Mod = pacn_sniffer,
+    ChildSpec = {Mod, {Mod, start_link, []}, permanent, 5000, worker, [Mod]},
+    {ok, { {one_for_one, 5, 10}, [ChildSpec]} }.
 
