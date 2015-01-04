@@ -1,3 +1,3 @@
 #!/bin/sh
 
-erl -noshell -pa ebin -eval 'application:start(pacn)'
+erl -pa ebin deps/*/ebin -eval 'application:ensure_all_started(pacn)'
