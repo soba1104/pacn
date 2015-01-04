@@ -13,7 +13,6 @@
 %% ===================================================================
 
 start_link() ->
-    io:format(standard_error, "Starting pacn_sniffer server...\n", []),
     supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %% ===================================================================
@@ -21,7 +20,6 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    io:format(standard_error, "Initializing pacn_sniffer server...\n", []),
     Mod = pacn_sniffer,
     ChildSpec = {Mod, {Mod, start_link, []}, permanent, 5000, worker, [Mod]},
     {ok, { {one_for_one, 5, 10}, [ChildSpec]} }.
