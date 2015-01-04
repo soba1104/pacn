@@ -21,6 +21,6 @@ start_link() ->
 
 init([]) ->
     Mod = pacn_sniffer,
-    ChildSpec = {Mod, {Mod, start_link, []}, permanent, 5000, worker, [Mod]},
+    ChildSpec = {Mod, {Mod, start_link, []}, permanent, 5000, worker, dynamic},
     {ok, { {one_for_one, 5, 10}, [ChildSpec]} }.
 
