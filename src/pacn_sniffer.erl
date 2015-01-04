@@ -20,6 +20,7 @@
 %% ===================================================================
 
 start_link() ->
+    io:format(standard_error, "pacn_sniffer:start_link\n", []),
     ServerName = {local, pacn_sniffer},
     gen_server:start_link(ServerName, ?MODULE, [], []).
 
@@ -27,19 +28,25 @@ start_link() ->
 %% gen_server callbacks
 %% ===================================================================
 
-init(_Args) ->
+init(Args) ->
+    io:format(standard_error, "pacn_sniffer:init(~p)\n", [Args]),
+    epcap:start([]),
     {ok, {}}.
 
-handle_call(_Request, _From, State) ->
+handle_call(Request, From, State) ->
+    io:format(standard_error, "pacn_sniffer:handle_call(~p, ~p, ~p)\n", [Request, From, State]),
     {noreply, State}.
 
-handle_cast(_Request, State) ->
+handle_cast(Request, State) ->
+    io:format(standard_error, "pacn_sniffer:handle_cast(~p, ~p)\n", [Request, State]),
     {noreply, State}.
 
-handle_info(_Info, State) ->
+handle_info(Info, State) ->
+    io:format(standard_error, "pacn_sniffer:handle_info(~p, ~p)\n", [Info, State]),
     {noreply, State}.
 
-terminate(_Reason, _State) ->
+terminate(Reason, State) ->
+    io:format(standard_error, "pacn_sniffer:terminate(~p, ~p)\n", [Reason, State]),
     ok.
 
 code_change(_OlsVsn, State, _Extra) ->
