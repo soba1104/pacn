@@ -16,7 +16,10 @@
         ]).
 
 %% pacn_sniffer State
--record(state, {matcher}).
+-record(state, {
+          matcher,
+          matcher_state
+         }).
 
 %% ===================================================================
 %% API functions
@@ -36,7 +39,8 @@ init(Args) ->
     io:format(standard_error, "pacn_sniffer:init(~p)\n", [Args]),
     [Interface, Filter, Matcher] = Args,
     epcap:start([{interface, Interface}, {filter, Filter}]),
-    {ok, #state{ matcher = Matcher }}.
+    {ok, MatcherState} = Matcher:init(),
+    {ok, #state{ matcher = Matcher, matcher_state = MatcherState }}.
 
 handle_call(Request, From, State) ->
     io:format(standard_error, "pacn_sniffer:handle_call(~p, ~p, ~p)\n", [Request, From, State]),
@@ -48,6 +52,9 @@ handle_cast(Request, State) ->
 
 handle_info(Info, State) ->
     io:format(standard_error, "pacn_sniffer:handle_info(~p, ~p)\n", [Info, State]),
+    Matcher = State#state.matcher,
+    MatcherState = State#state.matcher_state,
+    Matcher:match(Info, MatcherState),
     {noreply, State}.
 
 terminate(Reason, State) ->
