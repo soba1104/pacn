@@ -51,7 +51,6 @@ handle_cast(Request, State) ->
     {noreply, State}.
 
 handle_info(Info, State) ->
-    io:format(standard_error, "pacn_sniffer:handle_info(~p, ~p)\n", [Info, State]),
     Matcher = State#state.matcher,
     MatcherState = State#state.matcher_state,
     Matcher:match(Info, MatcherState),
