@@ -1,11 +1,11 @@
 -module(pacn).
 
 %% API
--export([start/2]).
+-export([start/3]).
 
 %% ===================================================================
 %% API functions
 %% ===================================================================
 
-start(Interface, Filter) ->
-    pacn_sup:start_sniffer(Interface, Filter).
+start(Interface, Filter, Matcher) ->
+    pacn_sup:start_sniffer(Interface, Filter, Matcher).
